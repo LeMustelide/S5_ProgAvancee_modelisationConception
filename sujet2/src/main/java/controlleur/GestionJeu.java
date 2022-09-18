@@ -7,6 +7,7 @@ public class GestionJeu {
     private Ihm vue = new Ihm();
     private Joueur joueur1;
     private Joueur joueur2;
+    private Joueur joueurCourant;
     private Plateau plateau = new Plateau();
 
     public void lancerJeu(){
@@ -19,12 +20,19 @@ public class GestionJeu {
             }
         }while (!valid);
         vue.afficherEtat(plateau);
-        Joueur joueurCourant = joueur1;
+        joueurCourant = joueur1;
+        valid = false;
         do{
             coup(joueurCourant);
             vue.afficherEtat(plateau);
-            joueurCourant = (joueurCourant == joueur1)? joueur2 : joueur1;
-        }while(true);
+            if(plateau.conditionVictoire(joueurCourant)){
+                valid = true;
+            }
+            else{
+                joueurCourant = (joueurCourant == joueur1)? joueur2 : joueur1;
+            }
+        }while(!valid);
+        fin();
     }
 
     public boolean coup(Joueur joueur){
@@ -44,5 +52,9 @@ public class GestionJeu {
         }while(!valid);
         plateau.modifier(l,c,joueur.getId());
         return valid;
+    }
+
+    public void fin(){
+        vue.fin(joueurCourant);
     }
 }

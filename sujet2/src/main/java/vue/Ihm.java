@@ -52,6 +52,10 @@ public class Ihm {
         }
     }
 
+    public void fin(Joueur joueur){
+        System.out.println(joueur.getNom()+" a gagné la partie !");
+    }
+
     public void erreur(String message){
         System.out.println(message);
     }
